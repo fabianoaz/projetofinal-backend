@@ -7,5 +7,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
 require('./controllers/pacientesController')(app)
+require('./controllers/profissionaisController')(app)
 
 app.listen(3000)
