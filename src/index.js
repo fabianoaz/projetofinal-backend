@@ -18,4 +18,4 @@ app.use(bodyParser.urlencoded({extended: false}))
 require('./controllers/pacientesController')(app)
 require('./controllers/profissionaisController')(app)
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
