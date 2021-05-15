@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         const profissionals = await Profissional.find()
         res.json(profissionals)
     } catch (err) {
-        return res.status(400).send({ error: 'Ocorreu falha ao listar profissionals' })
+        return res.status(400).send({ error: 'Ocorreu falha ao listar profissionais' })
     }
 })
 
