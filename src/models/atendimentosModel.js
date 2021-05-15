@@ -6,7 +6,7 @@ const AtendimentosSchema = new mongoose.Schema({
     atendimentoData: { type: String, required: true },
     profissionalNome: { type: String, required: true },
     profissionalEspecialidade: { type: String, required: true },
-    atentimento: { type: String, required: true },
+    atendimento: { type: String, required: true },
     orientacao: { type: String, required: true },
 })
 
