@@ -6,6 +6,7 @@ const PacientesSchema = new mongoose.Schema({
     diagnostico: { type: String, required: true },
     faz: { type: String, required: false },
     dificuldade: { type: String, required: false },
+    profissionalID:{type: String, require:true}
 })
 
 const Pacientes = mongoose.model('Pacientes',PacientesSchema)

@@ -38,6 +38,16 @@ router.get('/:id', getPaciente, async (req, res) => {
     }
 })
 
+router.get('/profissional/:id', async (req, res) => {
+    console.log("Profissional ID: " + req.params.id)
+    try {
+        pacientes = await Paciente.find().where('profissionalID').in(req.params.id).exec()
+        res.json(pacientes)
+    } catch (err) {
+        return res.status(400).json({ error: 'Ocorreu falha ao listar pacientes para o profissional selecionado ' + req.params.id})
+    }
+})
+
 router.post('/', async (req, res) => {
     try {
         const paciente = await Paciente.create(req.body)
