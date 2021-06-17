@@ -8,6 +8,7 @@ const AtendimentosSchema = new mongoose.Schema({
     profissionalEspecialidade: { type: String, required: true },
     atendimento: { type: String, required: true },
     orientacao: { type: String, required: true },
+    evolucao:{type: Number, require:true},
 })
 
 const Atendimentos = mongoose.model('Atendimentos',AtendimentosSchema)

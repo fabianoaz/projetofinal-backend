@@ -1,5 +1,6 @@
 const express = require('express')
 const Paciente = require('../models/pacientesModel')
+const Atendimentos = require('../models/atendimentosModel')
 
 const router = express.Router()
 
@@ -39,7 +40,6 @@ router.get('/:id', getPaciente, async (req, res) => {
 })
 
 router.get('/profissional/:id', async (req, res) => {
-    console.log("Profissional ID: " + req.params.id)
     try {
         pacientes = await Paciente.find().where('profissionalID').in(req.params.id).exec()
         res.json(pacientes)

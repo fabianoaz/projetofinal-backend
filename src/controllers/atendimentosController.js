@@ -16,21 +16,6 @@ async function getAtendimento(req, res, next) {
     next()
 }
 
-async function getAtendimentoPaciente(req, res, next) {
-    try {
-        atendimentos = await Atendimentos.find()
-    } catch (err) {
-        return res.status(500).json({ message: err.message })
-    }
-    res.atendimentos = atendimentos
-    next()
-    if (atendimentos == null) {
-        return res.status(404).json({ message: 'Atendimento para o paciente não localizado' })
-    }else{
-        res.json(atendimentos)
-    }
-}
-
 router.get('/', async (req, res) => {
     try {
         const atendimentos = await Atendimentos.find()
@@ -60,6 +45,37 @@ router.get('/paciente/:id', async (req, res) => {
         res.json(atendimentos)
     } catch (err) {
         return res.status(400).json({ error: 'Ocorreu falha ao listar atendimento para o paciente ' + req.params.id + ' - ' + atendimentos})
+    }
+})
+
+router.get('/evolucao/:id', async (req, res) => {
+    evolucao = [];
+    try {
+        evolucao = await Atendimentos.find().select('evolucao atendimentoData -_id').sort('atendimentoData').where('pacienteID').in(req.params.id).exec()
+        teste = []
+
+        for(let i=0; i<evolucao.length; i++){
+            teste.push([evolucao[i].atendimentoData , evolucao[i].evolucao])
+        }
+        res.json(teste)
+    } catch (err) {
+        return res.status(400).json({ error: 'Ocorreu falha ao listar evolução para o paciente ' + req.params.id + ' - ' + evolucao})
+    }
+})
+
+router.get('/evolucao/:pacienteid/:profissionalNome', async (req, res) => {
+    evolucao = [];
+    try {
+        evolucao = await Atendimentos.find().select('evolucao atendimentoData -_id').sort('atendimentoData').where('pacienteID').in(req.params.pacienteid)
+        .where('profissionalNome').in(req.params.profissionalNome).exec()
+        teste = []
+
+        for(let i=0; i<evolucao.length; i++){
+            teste.push([evolucao[i].atendimentoData , evolucao[i].evolucao])
+        }
+        res.json(teste)
+    } catch (err) {
+        return res.status(400).json({ error: 'Ocorreu falha ao listar evolução para o paciente ' + req.params.id + ' - ' + evolucao})
     }
 })
 
