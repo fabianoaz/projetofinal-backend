@@ -39,6 +39,20 @@ router.get('/:id', getProfissional, async (req, res) => {
     }
 })
 
+router.get('/nome/:nome', async (req, res) => {
+    try {
+        const profissional = await Profissional.find().where('nome').equals(req.params.nome).exec()
+        console.log(profissional)
+        if (profissional == null) {
+            return res.status(404).json({ error: 'profissional não localizado' })
+        } else {
+            res.json(profissional)
+        }
+    } catch (err) {
+        return res.status(400).send({ error: 'Ocorreu falha ao listar profissional ' + req.params.id })
+    }
+})
+
 router.post('/', async (req, res) => {
     try {
         const profissional = await Profissional.create(req.body)
