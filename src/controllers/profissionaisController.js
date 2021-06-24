@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', getProfissional, async (req, res) => {
+router.get('/:id', /*getProfissional,*/ async (req, res) => {
     try {
         const profissional = await Profissional.findById(req.params.id)
         if (profissional == null) {

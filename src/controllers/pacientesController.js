@@ -26,11 +26,26 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', getPaciente, async (req, res) => {
+router.get('/:id', /*getPaciente,*/ async (req, res) => {
     try {
         const paciente = await Paciente.findById(req.params.id)
+        console.log("GET Paciente by id: " + paciente)
         if (paciente == null) {
-            return res.status(404).json({ error: 'Paciente não localizado' })
+            return res.status(404).json({ error: 'Paciente TESTE não localizado' })
+        } else {
+            res.json(paciente)
+        }
+    } catch (err) {
+        return res.status(400).send({ error: 'Ocorreu falha ao listar paciente ' + req.params.id })
+    }
+})
+
+router.get('/semid/:id', /*getPaciente,*/ async (req, res) => {
+    try {
+        const paciente = await Paciente.findById(req.params.id) //.select('-_id')
+        console.log("GET Paciente by id: " + paciente)
+        if (paciente == null) {
+            return res.status(404).json({ error: 'Paciente TESTE não localizado' })
         } else {
             res.json(paciente)
         }
@@ -57,7 +72,23 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put("/associar/:id", async (req,resp) => {
+    console.log(req.body)
+
+   paciente = req.body
+
+   const atualizado = await Paciente.updateOne(req.body).where(_id).equals(req.id)
+    
+    try{
+    return resp.status(200).send({message:'Paciente atualizado: ' + [atualizado]})
+    } catch (err) {
+        return res.status(400).send({ error: 'Ocorreu falha ao atualizar paciente' })
+    }
+})
+
 router.put('/:id', getPaciente, async (req, res) => {
+
+    console.log("REQ: " + req.body.nome)
 
     if(req.body.nome != null){
         res.paciente.nome = req.body.nome
@@ -71,8 +102,15 @@ router.put('/:id', getPaciente, async (req, res) => {
         res.paciente.diagnostico = req.body.diagnostico
     }
 
+    if(req.body.profissionalID != null){
+        res.paciente.profissionalID = req.body.profissionalID
+    }
+
+    console.log("RESP: " + res)
+
     try {
         const pacienteAtualizado = await res.paciente.save()
+        console.log(pacienteAtualizado)
         res.json(pacienteAtualizado)
     } catch (err) {
         return res.status(400).send({ error: 'Ocorreu falha ao atualizar paciente' })

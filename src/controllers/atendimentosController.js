@@ -70,6 +70,10 @@ router.get('/evolucao/:pacienteid/:profissionalNome', async (req, res) => {
         .where('profissionalNome').in(req.params.profissionalNome).exec()
         teste = []
 
+        if(evolucao.length <=0){
+            return res.status(402).json({message: 'Não há atendimento para o profissional selecionado'})
+        }
+
         for(let i=0; i<evolucao.length; i++){
             teste.push([evolucao[i].atendimentoData , evolucao[i].evolucao])
         }
